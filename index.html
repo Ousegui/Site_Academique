@@ -71,7 +71,7 @@ body{ font-family: 'Segoe UI', sans-serif; background-color:#f8f9fa; }
     </a>
     <ul class="dropdown-menu" aria-labelledby="pedagogieDropdown">
         <li><a class="dropdown-item" href="#" id="licenceLink">Licence Fondamentale Physique S5</a></li>
-        <li><a class="dropdown-item" href="gmp-s3.html">Génie Mécanique Productique Thermique S3</a></li>
+        <li><a class="dropdown-item" href="#" id="gmpLink">Génie Mécanique Productique Thermique S3</a></li>
         <li><a class="dropdown-item" href="master-maer.html">Master Matériaux Avancés et Énergies Renouvelables</a></li>
     </ul>
 </li>
@@ -99,7 +99,25 @@ body{ font-family: 'Segoe UI', sans-serif; background-color:#f8f9fa; }
     <a href="Cinematique.pdf" download>Support 3 - Cinematique</a>
     <a href="Dynamique.pdf" download>Support 4 - Dynamique</a>
 </div>
+<!-- Sous-menu GMP -->
+<div id="gmpSubmenu" class="custom-submenu">
+<div class="submenu-trigger" id="gmpCoursTrigger">
+        📖 Cours
+</div>
+<a href="#">📝 TD (À venir)</a>
+<a href="Polycopié_TP_GPT_ 25-26.pdf" download>
+        🧪 TP
+</a>
+<a href="#">🎓 Examens (À venir)</a>
+</div>
 
+<!-- Sous-menu des cours GMP -->
+
+<div id="gmpCoursSubmenu" class="custom-submenu2">
+<a href="Ecoulements internes.pdf" download> Chap1</a>
+<a href="Ecoulements externes.pdf" download> Chap2</a>
+<a href="Ecoulement Comp Adia.pdf" download> Chap3</a>
+</div>
 <!-- Le reste du contenu (inchangé) -->
 <section class="hero">
 <div class="container"><div class="row align-items-center">
@@ -146,7 +164,46 @@ body{ font-family: 'Segoe UI', sans-serif; background-color:#f8f9fa; }
         const submenu = document.getElementById('licenceSubmenu');
         const supportsTrigger = document.getElementById('supportsTrigger');
         const supportsSubmenu = document.getElementById('supportsSubmenu');
-        
+        const gmpLink = document.getElementById('gmpLink');
+        const gmpSubmenu = document.getElementById('gmpSubmenu');
+        const gmpCoursTrigger = document.getElementById('gmpCoursTrigger');
+        const gmpCoursSubmenu = document.getElementById('gmpCoursSubmenu');
+        gmpLink.addEventListener('click', function(e){
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    if(gmpSubmenu.style.display === 'block'){
+        gmpSubmenu.style.display = 'none';
+    }
+    else{
+
+        positionSubmenu(gmpSubmenu,
+                        gmpLink,
+                        0,
+                        5);
+
+        gmpSubmenu.style.display = 'block';
+    }
+
+});
+        gmpCoursTrigger.addEventListener('click', function(e){
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    const rect =
+    gmpCoursTrigger.getBoundingClientRect();
+
+    gmpCoursSubmenu.style.top =
+    (rect.top + window.scrollY) + 'px';
+
+    gmpCoursSubmenu.style.left =
+    (rect.right + window.scrollX + 5) + 'px';
+
+    gmpCoursSubmenu.style.display = 'block';
+
+});
         // Positionne un menu flottant par rapport à un élément cible
         function positionSubmenu(menu, targetElement, offsetX = 0, offsetY = 0) {
             const rect = targetElement.getBoundingClientRect();
