@@ -88,14 +88,16 @@ body{ font-family: 'Segoe UI', sans-serif; background-color:#f8f9fa; }
 </div>
 </nav>
 
-<!-- Premier sous-menu flottant (Licence) -->
+<!-- ===================================================== -->
+<!-- SOUS-MENU LICENCE -->
+<!-- ===================================================== -->
 <div id="licenceSubmenu" class="custom-submenu">
     <a href="Polycopie.pdf" download>📖 Cours</a>
 
-    <!-- Lien "Supports" avec un sous-menu -->
+    <!-- Déclencheur : Supports et Notes de cours -->
     <div class="submenu-trigger" id="supportsTrigger">📑 Supports et Notes de cours</div>
 
-    <!-- NOUVEAU : TD devient un déclencheur de sous-menu -->
+    <!-- Déclencheur : TD Licence -->
     <div class="submenu-trigger" id="tdLicenceTrigger">📝 TD</div>
 
     <a href="Polycopié_TP_S5_ 26-27.pdf" download>🧪 TP</a>
@@ -110,14 +112,17 @@ body{ font-family: 'Segoe UI', sans-serif; background-color:#f8f9fa; }
     <a href="Dynamique.pdf" download style="display: none;">Support 4 - Dynamique</a>
 </div>
 
-<!-- NOUVEAU : Sous-menu TD Licence -->
+<!-- Sous-menu TD Licence -->
 <div id="tdLicenceSubmenu" class="custom-submenu2">
     <a href="Serie 1.pdf" download>📄 Serie 1</a>
     <a href="Serie2.pdf" download style="display: none;">📄 Serie2</a>
     <a href="Serie3.pdf" download style="display: none;">📄 Serie3</a>
     <a href="Serie4.pdf" download style="display: none;">📄 Serie4</a>
 </div>
-<!-- Sous-menu GMP -->
+
+<!-- ===================================================== -->
+<!-- SOUS-MENU GMP -->
+<!-- ===================================================== -->
 <div id="gmpSubmenu" class="custom-submenu">
     <div class="submenu-trigger" id="gmpCoursTrigger">📖 Cours</div>
     <div class="submenu-trigger" id="tdTrigger">📝 TD</div>
@@ -133,14 +138,16 @@ body{ font-family: 'Segoe UI', sans-serif; background-color:#f8f9fa; }
     <a href="Ecoulement Comp Adia.pdf" download style="display: none;">Chap3</a>
 </div>
 
-<!-- Sous-menu TD -->
+<!-- Sous-menu TD GMP -->
 <div id="tdSubmenu" class="custom-submenu2">
     <a href="TD1.pdf" download>TD1</a>
     <a href="TD2.pdf" download style="display: none;">TD2</a>
     <a href="TD3.pdf" download style="display: none;">TD3</a>
 </div>
 
-<!-- Le reste du contenu (inchangé) -->
+<!-- ===================================================== -->
+<!-- CONTENU PRINCIPAL -->
+<!-- ===================================================== -->
 <section class="hero">
 <div class="container"><div class="row align-items-center">
 <div class="col-md-4 text-center"><img src="photo.jpg" class="profile-img" alt="Photo"></div>
@@ -187,6 +194,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const submenu           = document.getElementById('licenceSubmenu');
     const supportsTrigger   = document.getElementById('supportsTrigger');
     const supportsSubmenu   = document.getElementById('supportsSubmenu');
+    const tdLicenceTrigger  = document.getElementById('tdLicenceTrigger');
+    const tdLicenceSubmenu  = document.getElementById('tdLicenceSubmenu');
 
     const gmpLink           = document.getElementById('gmpLink');
     const gmpSubmenu        = document.getElementById('gmpSubmenu');
@@ -195,21 +204,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const tdTrigger         = document.getElementById('tdTrigger');
     const tdSubmenu         = document.getElementById('tdSubmenu');
 
-    /* ---------- Utilitaire : positionner un sous-menu à droite d'un trigger ---------- */
+    /* ---------- Utilitaires ---------- */
     function positionRight(menu, trigger) {
         const rect = trigger.getBoundingClientRect();
         menu.style.top  = (rect.top  + window.scrollY) + 'px';
         menu.style.left = (rect.right + window.scrollX + 5) + 'px';
     }
-
-    /* ---------- Utilitaire : positionner un sous-menu sous un lien ---------- */
     function positionBelow(menu, target, offsetX = 0, offsetY = 0) {
         const rect = target.getBoundingClientRect();
         menu.style.top  = (rect.bottom + window.scrollY + offsetY) + 'px';
         menu.style.left = (rect.left   + window.scrollX + offsetX) + 'px';
     }
-
-    /* ---------- Utilitaire : toggle un menu ---------- */
     function toggle(menu, positionFn) {
         if (menu.style.display === 'block') {
             menu.style.display = 'none';
@@ -225,14 +230,24 @@ document.addEventListener('DOMContentLoaded', function() {
     licenceLink.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        supportsSubmenu.style.display = 'none';
+        // Ferme tous les sous-menus enfants à chaque clic
+        supportsSubmenu.style.display  = 'none';
+        tdLicenceSubmenu.style.display = 'none';
         toggle(submenu, () => positionBelow(submenu, licenceLink, 0, 5));
     });
 
     supportsTrigger.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
+        tdLicenceSubmenu.style.display = 'none';   // ferme l'autre sous-menu
         toggle(supportsSubmenu, () => positionRight(supportsSubmenu, supportsTrigger));
+    });
+
+    tdLicenceTrigger.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        supportsSubmenu.style.display = 'none';    // ferme l'autre sous-menu
+        toggle(tdLicenceSubmenu, () => positionRight(tdLicenceSubmenu, tdLicenceTrigger));
     });
 
     /* =========================================================
@@ -241,7 +256,6 @@ document.addEventListener('DOMContentLoaded', function() {
     gmpLink.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        // Fermer les sous-menus enfants à chaque ouverture/fermeture
         gmpCoursSubmenu.style.display = 'none';
         tdSubmenu.style.display = 'none';
         toggle(gmpSubmenu, () => positionBelow(gmpSubmenu, gmpLink, 0, 5));
@@ -250,14 +264,14 @@ document.addEventListener('DOMContentLoaded', function() {
     gmpCoursTrigger.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        tdSubmenu.style.display = 'none';           // ferme TD
+        tdSubmenu.style.display = 'none';
         toggle(gmpCoursSubmenu, () => positionRight(gmpCoursSubmenu, gmpCoursTrigger));
     });
 
     tdTrigger.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        gmpCoursSubmenu.style.display = 'none';     // ferme Cours
+        gmpCoursSubmenu.style.display = 'none';
         toggle(tdSubmenu, () => positionRight(tdSubmenu, tdTrigger));
     });
 
@@ -273,8 +287,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!supportsSubmenu.contains(e.target) && e.target !== supportsTrigger) {
             supportsSubmenu.style.display = 'none';
         }
+        if (!tdLicenceSubmenu.contains(e.target) && e.target !== tdLicenceTrigger) {
+            tdLicenceSubmenu.style.display = 'none';
+        }
 
-        // GMP (menu principal + ses sous-menus)
+        // GMP
         if (!gmpSubmenu.contains(e.target) && e.target !== gmpLink) {
             gmpSubmenu.style.display = 'none';
             gmpCoursSubmenu.style.display = 'none';
@@ -283,9 +300,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     /* ---------- Empêcher la fermeture si on clique dans les menus ---------- */
-    [submenu, supportsSubmenu, gmpSubmenu, gmpCoursSubmenu, tdSubmenu].forEach(function(menu) {
+    [submenu, supportsSubmenu, tdLicenceSubmenu, gmpSubmenu, gmpCoursSubmenu, tdSubmenu].forEach(function(menu) {
         menu.addEventListener('click', function(e) {
-            // On empêche la fermeture UNIQUEMENT si le clic n'est pas sur un trigger interne
             if (!e.target.classList.contains('submenu-trigger')) {
                 e.stopPropagation();
             }
@@ -300,6 +316,8 @@ document.addEventListener('DOMContentLoaded', function() {
             positionBelow(submenu, licenceLink, 0, 5);
         if (supportsSubmenu.style.display === 'block')
             positionRight(supportsSubmenu, supportsTrigger);
+        if (tdLicenceSubmenu.style.display === 'block')
+            positionRight(tdLicenceSubmenu, tdLicenceTrigger);
         if (gmpSubmenu.style.display === 'block')
             positionBelow(gmpSubmenu, gmpLink, 0, 5);
         if (gmpCoursSubmenu.style.display === 'block')
