@@ -91,16 +91,18 @@ body{ font-family: 'Segoe UI', sans-serif; background-color:#f8f9fa; }
 <!-- Premier sous-menu flottant (Licence) -->
 <div id="licenceSubmenu" class="custom-submenu">
     <a href="Polycopie.pdf" download>📖 Cours</a>
+
     <!-- Lien "Supports" avec un sous-menu -->
     <div class="submenu-trigger" id="supportsTrigger">📑 Supports et Notes de cours</div>
-    <a href="#">📝 TD (À venir)</a>
-    <a href="Polycopié_TP_S5_ 26-27.pdf" download>
-        🧪 TP
-    </a>
+
+    <!-- NOUVEAU : TD devient un déclencheur de sous-menu -->
+    <div class="submenu-trigger" id="tdLicenceTrigger">📝 TD</div>
+
+    <a href="Polycopié_TP_S5_ 26-27.pdf" download>🧪 TP</a>
     <a href="#">🎓 Examens (À venir)</a>
 </div>
 
-<!-- Second sous-menu flottant (les 4 PDF de Supports) -->
+<!-- Sous-menu Supports -->
 <div id="supportsSubmenu" class="custom-submenu2">
     <a href="Generalites.pdf" download>Support 1 - Generalites</a>
     <a href="Statique.pdf" download style="display: none;">Support 2 - Statique</a>
@@ -108,6 +110,13 @@ body{ font-family: 'Segoe UI', sans-serif; background-color:#f8f9fa; }
     <a href="Dynamique.pdf" download style="display: none;">Support 4 - Dynamique</a>
 </div>
 
+<!-- NOUVEAU : Sous-menu TD Licence -->
+<div id="tdLicenceSubmenu" class="custom-submenu2">
+    <a href="Serie 1.pdf" download>📄 Serie 1</a>
+    <a href="Serie2.pdf" download style="display: none;">📄 Serie2</a>
+    <a href="Serie3.pdf" download style="display: none;">📄 Serie3</a>
+    <a href="Serie4.pdf" download style="display: none;">📄 Serie4</a>
+</div>
 <!-- Sous-menu GMP -->
 <div id="gmpSubmenu" class="custom-submenu">
     <div class="submenu-trigger" id="gmpCoursTrigger">📖 Cours</div>
