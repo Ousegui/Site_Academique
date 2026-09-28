@@ -77,7 +77,7 @@ body{ font-family: 'Segoe UI', sans-serif; background-color:#f8f9fa; }
     <ul class="dropdown-menu" aria-labelledby="pedagogieDropdown">
         <li><a class="dropdown-item" href="#" id="licenceLink">Licence Fondamentale Physique S5</a></li>
         <li><a class="dropdown-item" href="#" id="gmpLink">Génie Mécanique Productique Thermique S3</a></li>
-        <li><a class="dropdown-item" href="master-maer.html">Master Matériaux Avancés et Énergies Renouvelables</a></li>
+        <li><a class="dropdown-item" href="#" id="masterLink">Master Matériaux Avancés et Énergies Renouvelables</a></li>
     </ul>
 </li>
 
@@ -93,18 +93,12 @@ body{ font-family: 'Segoe UI', sans-serif; background-color:#f8f9fa; }
 <!-- ===================================================== -->
 <div id="licenceSubmenu" class="custom-submenu">
     <a href="Polycopie.pdf" download>📖 Cours</a>
-
-    <!-- Déclencheur : Supports et Notes de cours -->
     <div class="submenu-trigger" id="supportsTrigger">📑 Supports et Notes de cours</div>
-
-    <!-- Déclencheur : TD Licence -->
     <div class="submenu-trigger" id="tdLicenceTrigger">📝 TD</div>
-
     <a href="Polycopié_TP_S5_ 26-27.pdf" download>🧪 TP</a>
     <a href="#">🎓 Examens (À venir)</a>
 </div>
 
-<!-- Sous-menu Supports -->
 <div id="supportsSubmenu" class="custom-submenu2">
     <a href="Generalites.pdf" download>Support 1 - Generalites</a>
     <a href="Statique.pdf" download style="display: none;">Support 2 - Statique</a>
@@ -112,7 +106,6 @@ body{ font-family: 'Segoe UI', sans-serif; background-color:#f8f9fa; }
     <a href="Dynamique.pdf" download style="display: none;">Support 4 - Dynamique</a>
 </div>
 
-<!-- Sous-menu TD Licence -->
 <div id="tdLicenceSubmenu" class="custom-submenu2">
     <a href="Serie1.pdf" download>📄 Serie1</a>
     <a href="Serie2.pdf" download style="display: none;">📄 Serie2</a>
@@ -131,18 +124,31 @@ body{ font-family: 'Segoe UI', sans-serif; background-color:#f8f9fa; }
     <a href="#">🎓 Examens (À venir)</a>
 </div>
 
-<!-- Sous-menu des cours GMP -->
 <div id="gmpCoursSubmenu" class="custom-submenu2">
     <a href="Ecoulements internes.pdf" download>Chap1</a>
     <a href="Ecoulements externes.pdf" download style="display: none;">Chap2</a>
     <a href="Ecoulement Comp Adia.pdf" download style="display: none;">Chap3</a>
 </div>
 
-<!-- Sous-menu TD GMP -->
 <div id="tdSubmenu" class="custom-submenu2">
     <a href="TD1.pdf" download>TD1</a>
     <a href="TD2.pdf" download style="display: none;">TD2</a>
     <a href="TD3.pdf" download style="display: none;">TD3</a>
+</div>
+
+<!-- ===================================================== -->
+<!-- SOUS-MENU MASTER -->
+<!-- ===================================================== -->
+<div id="masterSubmenu" class="custom-submenu">
+    <a href="Polycopie_Mécanique des fluides avancée.pdf" download>📖 Cours</a>
+    <div class="submenu-trigger" id="masterTdTrigger">📝 TD</div>
+</div>
+
+<!-- Sous-menu TD Master -->
+<div id="masterTdSubmenu" class="custom-submenu2">
+    <a href="TD1_Mécanique des fluides avancée.pdf" download>📄 TD1</a>
+    <a href="TD2_Mécanique des fluides avancée.pdf" download style="display: none;">📄 TD2</a>
+    <a href="TD3_Mécanique des fluides avancée.pdf" download style="display: none;">📄 TD3</a>
 </div>
 
 <!-- ===================================================== -->
@@ -204,6 +210,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const tdTrigger         = document.getElementById('tdTrigger');
     const tdSubmenu         = document.getElementById('tdSubmenu');
 
+    const masterLink        = document.getElementById('masterLink');
+    const masterSubmenu     = document.getElementById('masterSubmenu');
+    const masterTdTrigger   = document.getElementById('masterTdTrigger');
+    const masterTdSubmenu   = document.getElementById('masterTdSubmenu');
+
     /* ---------- Utilitaires ---------- */
     function positionRight(menu, trigger) {
         const rect = trigger.getBoundingClientRect();
@@ -230,7 +241,6 @@ document.addEventListener('DOMContentLoaded', function() {
     licenceLink.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        // Ferme tous les sous-menus enfants à chaque clic
         supportsSubmenu.style.display  = 'none';
         tdLicenceSubmenu.style.display = 'none';
         toggle(submenu, () => positionBelow(submenu, licenceLink, 0, 5));
@@ -239,14 +249,14 @@ document.addEventListener('DOMContentLoaded', function() {
     supportsTrigger.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        tdLicenceSubmenu.style.display = 'none';   // ferme l'autre sous-menu
+        tdLicenceSubmenu.style.display = 'none';
         toggle(supportsSubmenu, () => positionRight(supportsSubmenu, supportsTrigger));
     });
 
     tdLicenceTrigger.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        supportsSubmenu.style.display = 'none';    // ferme l'autre sous-menu
+        supportsSubmenu.style.display = 'none';
         toggle(tdLicenceSubmenu, () => positionRight(tdLicenceSubmenu, tdLicenceTrigger));
     });
 
@@ -276,6 +286,22 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     /* =========================================================
+       MASTER
+       ========================================================= */
+    masterLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        masterTdSubmenu.style.display = 'none';
+        toggle(masterSubmenu, () => positionBelow(masterSubmenu, masterLink, 0, 5));
+    });
+
+    masterTdTrigger.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        toggle(masterTdSubmenu, () => positionRight(masterTdSubmenu, masterTdTrigger));
+    });
+
+    /* =========================================================
        Fermeture au clic ailleurs
        ========================================================= */
     document.addEventListener('click', function(e) {
@@ -297,10 +323,17 @@ document.addEventListener('DOMContentLoaded', function() {
             gmpCoursSubmenu.style.display = 'none';
             tdSubmenu.style.display = 'none';
         }
+
+        // Master
+        if (!masterSubmenu.contains(e.target) && e.target !== masterLink) {
+            masterSubmenu.style.display = 'none';
+            masterTdSubmenu.style.display = 'none';
+        }
     });
 
     /* ---------- Empêcher la fermeture si on clique dans les menus ---------- */
-    [submenu, supportsSubmenu, tdLicenceSubmenu, gmpSubmenu, gmpCoursSubmenu, tdSubmenu].forEach(function(menu) {
+    [submenu, supportsSubmenu, tdLicenceSubmenu, gmpSubmenu, gmpCoursSubmenu, tdSubmenu,
+     masterSubmenu, masterTdSubmenu].forEach(function(menu) {
         menu.addEventListener('click', function(e) {
             if (!e.target.classList.contains('submenu-trigger')) {
                 e.stopPropagation();
@@ -324,6 +357,10 @@ document.addEventListener('DOMContentLoaded', function() {
             positionRight(gmpCoursSubmenu, gmpCoursTrigger);
         if (tdSubmenu.style.display === 'block')
             positionRight(tdSubmenu, tdTrigger);
+        if (masterSubmenu.style.display === 'block')
+            positionBelow(masterSubmenu, masterLink, 0, 5);
+        if (masterTdSubmenu.style.display === 'block')
+            positionRight(masterTdSubmenu, masterTdTrigger);
     }
     window.addEventListener('scroll', repositionAll);
     window.addEventListener('resize', repositionAll);
