@@ -224,6 +224,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const masterSubmenu     = document.getElementById('masterSubmenu');
     const masterTdTrigger   = document.getElementById('masterTdTrigger');
     const masterTdSubmenu   = document.getElementById('masterTdSubmenu');
+    const masterTpTrigger   = document.getElementById('masterTpTrigger');
+    const masterTpSubmenu   = document.getElementById('masterTpSubmenu');
+
 
     /* ---------- Utilitaires ---------- */
     function positionRight(menu, trigger) {
@@ -310,6 +313,11 @@ document.addEventListener('DOMContentLoaded', function() {
         e.stopPropagation();
         toggle(masterTdSubmenu, () => positionRight(masterTdSubmenu, masterTdTrigger));
     });
+    masterTpTrigger.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        toggle(masterTpSubmenu, () => positionRight(masterTpSubmenu, masterTpTrigger));
+    });
 
     /* =========================================================
        Fermeture au clic ailleurs
@@ -371,6 +379,8 @@ document.addEventListener('DOMContentLoaded', function() {
             positionBelow(masterSubmenu, masterLink, 0, 5);
         if (masterTdSubmenu.style.display === 'block')
             positionRight(masterTdSubmenu, masterTdTrigger);
+        if (masterTpSubmenu.style.display === 'block')
+            positionRight(masterTdSubmenu, masterTpTrigger);
     }
     window.addEventListener('scroll', repositionAll);
     window.addEventListener('resize', repositionAll);
