@@ -155,7 +155,7 @@ body{ font-family: 'Segoe UI', sans-serif; background-color:#f8f9fa; }
     <a href="TD3_Mécanique des fluides avancée.pdf" download style="display: none;">📄 TD3</a>
 </div>
     <!-- Sous-menu TP Master -->
-<div id="masterTpSubmenu" class="custom-submenu2">
+<div id="masterTpSubmenu" class="custom-submenu3">
     <a href="TP_Joukowski_ameliore.pdf" download>📄 TP1</a>
     <a href="TD2_Mécanique_des_fluides_avancée.pdf" download style="display: none;">📄 TD2</a>
     <a href="TD3_Mécanique des fluides avancée.pdf" download style="display: none;">📄 TD3</a>
@@ -313,6 +313,12 @@ document.addEventListener('DOMContentLoaded', function() {
         e.stopPropagation();
         toggle(masterTdSubmenu, () => positionRight(masterTdSubmenu, masterTdTrigger));
     });
+   masterLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        masterTpSubmenu.style.display = 'none';
+        toggle(masterSubmenu, () => positionBelow(masterSubmenu, masterLink, 0, 5));
+    });
     masterTpTrigger.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -347,10 +353,14 @@ document.addEventListener('DOMContentLoaded', function() {
             masterSubmenu.style.display = 'none';
             masterTdSubmenu.style.display = 'none';
         }
+        if (!masterSubmenu.contains(e.target) && e.target !== masterLink) {
+            masterSubmenu.style.display = 'none';
+            masterTpSubmenu.style.display = 'none';
+        }
     });
 
     /* ---------- Empêcher la fermeture si on clique dans les menus ---------- */
-    [submenu, supportsSubmenu, tdLicenceSubmenu, gmpSubmenu, gmpCoursSubmenu, tdSubmenu,
+    [submenu, supportsSubmenu, tdLicenceSubmenu, gmpSubmenu, gmpCoursSubmenu, tdSubmenu,tpSubmenu
      masterSubmenu, masterTdSubmenu].forEach(function(menu) {
         menu.addEventListener('click', function(e) {
             if (!e.target.classList.contains('submenu-trigger')) {
@@ -380,7 +390,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (masterTdSubmenu.style.display === 'block')
             positionRight(masterTdSubmenu, masterTdTrigger);
         if (masterTpSubmenu.style.display === 'block')
-            positionRight(masterTdSubmenu, masterTpTrigger);
+            positionRight(masterTpSubmenu, masterTpTrigger);
     }
     window.addEventListener('scroll', repositionAll);
     window.addEventListener('resize', repositionAll);
